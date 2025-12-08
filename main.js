@@ -24,3 +24,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
 
+const url = 'https://raw.githubusercontent.com/andyklimczak/TheReportOfTheWeek-API/refs/heads/master/data/reports.json';
+
+try {
+   const response = await fetch(url);
+
+   if (!response.ok) {
+       throw new Error('Error fetching data from the API');
+   }
+      const data = await response.json();
+
+} catch (error) {
+        // document.querySelector("#results").innerHTML = "Error: Could not fetch data";
+        console.error(error);
+    }
+
