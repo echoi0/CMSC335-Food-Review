@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+	<title>Recipe Matching</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Looking for some new food/drinks?</h1>
+        <form action="/search" method="POST">
+            <label for="name">First, tell me your name:</label><br />
+            <input class="name" type="text" name="name" placeholder="My Name Is..."><br><br>
+            <label for="reviews">Now... what sounds best:</label><br />
+            <select name="reviews" multiple>
+                <option value="Food">Food</option>
+                <option value="Drink">Regular Drinks</option>
+                <option value="Energy">Energy Drinks</option>
+                <option value="Surprise">Surprise Me!</option>
+            </select><br><br>
+
+            <button type="submit">Find Review!</button>
+            <button type="reset">Reset</button><br><br>
+
+            <button type="button" onclick="window.location.href='/recentSearches'">Your Recent Results</button>
+        </form>
+    </div>
+</body>
