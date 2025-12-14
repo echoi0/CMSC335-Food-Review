@@ -5,11 +5,11 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 
 require("dotenv").config({
    path: path.resolve(__dirname, "credentials/.env"),
 });
-const { MongoClient, ServerApiVersion } = require("mongodb");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
@@ -18,16 +18,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 async function main() {
    const uri = process.env.MONGO_CONNECTION_STRING;
-   const databaseName = "FOOD";
-   const collectionName = "foodReview";
    const url = 'https://raw.githubusercontent.com/andyklimczak/TheReportOfTheWeek-API/refs/heads/master/data/reports.json';
    let data;
 
 try {
-      const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1});
-      await client.connect();
-      const database = client.db(databaseName);
-      const collection = database.collection(collectionName);
+      // const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1});
+      // await client.connect();
+      // const database = client.db(databaseName);
+      // const collection = database.collection(collectionName);
+
+      await mongoose.connect(uri);
+   
+      const foodSchema = new mongoose.Schema({
+               product: String
+      });
+   
+      const Food = mongoose.model("Food", foodSchema);
 
 app.get("/", async (request, response) => {
    try {
@@ -46,6 +52,7 @@ app.get("/", async (request, response) => {
 
 
 app.post("/search", async (request, response) => {
+   
    const itemsSelected = request.body.reviews;
       try {
       const APIresponse = await fetch(url);
@@ -66,7 +73,10 @@ app.post("/search", async (request, response) => {
                   let num = Math.floor(Math.random()* data2.length);
                     if(data2[num].videoTitle.includes(itemOne)){
                      count++;
-                     await collection.insertOne(data2[num].product);
+                     //await collection.insertOne(data2[num].product);
+                     await Food.create({
+                        product : data2[num].product
+                     });
                     results += `
                         <p>Product: ${data2[num].product}</p>
                         <p>Rating: ${data2[num].rating}</p>
@@ -83,6 +93,7 @@ app.post("/search", async (request, response) => {
       console.error(error);
       //response.render("index", { data: null, error: "Could not fetch data" });
       }
+  
 
    // const database = client.db(databaseName);
    // const collection = database.collection(collectionName);
@@ -92,22 +103,39 @@ app.post("/search", async (request, response) => {
    // await collection.insertOne(user);
 });
 
-app.post("/recent", async (request, response) => {
-   //const database = client.db(databaseName);
-   //const collection = database.collection(collectionName);
+app.get("/recentSearches", async (request, response) => {
    const filter = {};
-   const cursor = collection.find(filter);
-   const result = await cursor.toArray();
+   // const cursor = collection.find(filter);
+   const cursor = await Food.find(filter);
    let answer = "";
-      result.forEach(item => answer += `${item}<br>`);
-      answer += `Recent Searches: ${result.length} reviews`; 
-      response.send(answer);
+      cursor.forEach(item => answer += `${item.product}<br>`);
+      answer += `Recent Searches: ${cursor.length} reviews`; 
+      let hi = {search: answer};
+      response.render("recentSearch", hi);
 });
 
-console.log(`Web server started and running at http://localhost:5000`);
+app.get("/clearSearches", async (request, response) => {
+      await Food.deleteMany({});
+      response.render("clear");
+});
+
+// app.post("/recent", async (request, response) => {
+//    //const database = client.db(databaseName);
+//    //const collection = database.collection(collectionName);
+//    const filter = {};
+//    const cursor = collection.find(filter);
+//    const cursor = await Food.find(filter);
+//    const result = await cursor.toArray();
+//    let answer = "";
+//       result.forEach(item => answer += `${item}<br>`);
+//       answer += `Recent Searches: ${result.length} reviews`; 
+//       response.send(answer);
+// });
+
+console.log(`Web server started and running at http://localhost:5001`);
 
 
-console.log("Stop to shutdown the server: ");
+console.log("Enter stop to shutdown the server: ");
 process.stdin.on("data", (data) => {
     const input = data.toString().trim();
     if (input === "stop") {
@@ -120,9 +148,8 @@ process.stdin.on("data", (data) => {
 
 } catch (e) {
       console.error(e);
-    } 
+} 
+   app.listen(5001);
+};
 
-app.listen(5001);
-   };
-
-   main();
+main();
