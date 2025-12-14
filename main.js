@@ -44,9 +44,8 @@ app.get("/", async (request, response) => {
    }
 });
 
-
-app.post("/search", async (request, response) => {
-   const itemsSelected = request.body.reviews;
+app.get("/search", async (request, response) => {
+   const itemsSelected = request.params.itemsSelected;
       try {
       const APIresponse = await fetch(url);
       if (!APIresponse.ok) {
@@ -60,25 +59,27 @@ app.post("/search", async (request, response) => {
       }else if(itemsSelected === "Drinks"){
          itemOne = "Drink Review" //only drink
       }
-      let results = ``;
+      let results = `<table><th>Product</th><th>Manufacturer</th><th>Rating</th><th>Youtube Video Title</th>`;
       let count = 0;
       while (count < 4){
-                  let num = Math.floor(Math.random()* data2.length);
-                    if(data2[num].videoTitle.includes(itemOne)){
-                     count++;
-                     await collection.insertOne(data2[num].product);
-                    results += `
-                        <p>Product: ${data2[num].product}</p>
-                        <p>Rating: ${data2[num].rating}</p>
-                        <p>Rating: ${data2[num].videoTitle}</p>
-                        <hr>
-                    `;}
-                //});
-               }
-
-               const variables = {result : results };
-               
-                 response.render("search", variables);
+            let num = Math.floor(Math.random()* data2.length);
+            if(data2[num].videoTitle.includes(itemOne)){
+            count++;
+            await collection.insertOne({ product: data2[num].product });
+            results += 
+            `
+                  <tr>
+                  <td>${data2[num].product}</td>
+                  <td>${data2[num].manufacturer}</td>
+                  <td>${data2[num].rating || "No Rating"}</td>
+                  <td>${data2[num].videoTitle}</td>
+                  </tr>
+            `;
+            }
+      }
+      results += "</table>";
+      
+      response.render("search", {table : results});
       } catch (error) {
       console.error(error);
       //response.render("index", { data: null, error: "Could not fetch data" });
@@ -92,6 +93,7 @@ app.post("/search", async (request, response) => {
    // await collection.insertOne(user);
 });
 
+
 app.post("/recent", async (request, response) => {
    //const database = client.db(databaseName);
    //const collection = database.collection(collectionName);
@@ -104,7 +106,7 @@ app.post("/recent", async (request, response) => {
       response.send(answer);
 });
 
-console.log(`Web server started and running at http://localhost:5000`);
+console.log(`Web server started and running at http://localhost:6543`);
 
 
 console.log("Stop to shutdown the server: ");
@@ -122,7 +124,7 @@ process.stdin.on("data", (data) => {
       console.error(e);
     } 
 
-app.listen(5001);
+app.listen(6543);
    };
 
    main();

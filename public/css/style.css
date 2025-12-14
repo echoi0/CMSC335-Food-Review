@@ -54,3 +54,19 @@ select {
     border: 2px solid navy;
     margin-top: 10px;
 }
+
+#table-wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid navy;
+  padding: 10px 14px;
+  text-align: left;
+}

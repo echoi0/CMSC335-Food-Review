@@ -11,11 +11,11 @@
 <body>
     <div class="container">
         <h1>Looking for some new food/drinks?</h1>
-        <form action="/search" method="POST">
+        <form action="/search" method="GET">
             <label for="name">First, tell me your name:</label><br />
             <input class="name" type="text" name="name" placeholder="My Name Is..."><br><br>
             <label for="reviews">Now... what sounds best:</label><br />
-            <select name="reviews" multiple>
+            <select name="reviews">
                 <option value="Food">Food</option>
                 <option value="Drink">Regular Drinks</option>
                 <option value="Energy">Energy Drinks</option>
