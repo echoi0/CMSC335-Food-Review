@@ -64,7 +64,6 @@ app.get("/search", async (request, response) => {
       }else if (itemsSelected === "Surprise"){
          const options = ["Running on Empty", "Energy Crisis", "Drink Review"];
          itemOne = options[Math.floor(Math.random() * options.length)];
-         console.log(Math.floor(Math.random() * options.length));
       }
       let results = `<table><th>Product</th><th>Manufacturer</th><th>Rating</th><th>Youtube Video Title</th>`;
       let count = 0;
