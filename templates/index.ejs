@@ -12,11 +12,9 @@
     <div class="container">
         <h1>Looking for some new food/drinks?</h1>
         <form action="/search" method="GET">
-            <label for="name">First, tell me your name:</label><br />
-            <input class="name" type="text" name="name" placeholder="My Name Is..."><br><br>
-            <label for="reviews">Now... what sounds best:</label><br />
-            <select name="reviews">
-                <option value="Food">Food</option>
+            <label for="reviews">What sounds best?</label><br />
+            <select name="reviews" required>
+                <option value="Food" selected>Food</option>
                 <option value="Drink">Regular Drinks</option>
                 <option value="Energy">Energy Drinks</option>
                 <option value="Surprise">Surprise Me!</option>
@@ -25,8 +23,8 @@
             <button type="submit">Find Review!</button>
             <button type="reset">Reset</button><br><br>
 
-            <button type="button" onclick="window.location.href='/recentSearches'">Your Recent Results</button>
-            <button type="button" onclick="window.location.href='/clearSearches'">Clear Results</button>
+            <button type="button" onclick="window.location.href='/recent'">Your Recent Results</button>
+            <button type="button" onclick="window.location.href='/clear'">Clear Results</button>
         </form>
     </div>
 </body>

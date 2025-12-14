@@ -45,7 +45,7 @@ app.get("/", async (request, response) => {
 });
 
 app.get("/search", async (request, response) => {
-   const itemsSelected = request.params.itemsSelected;
+   const itemsSelected = request.query.reviews;
       try {
       const APIresponse = await fetch(url);
       if (!APIresponse.ok) {
@@ -53,17 +53,22 @@ app.get("/search", async (request, response) => {
       }
       const dataA = await APIresponse.json();
       let data2 = dataA.reports;
-      let itemOne = "Review";
-      if (itemsSelected === "Food"){
-         itemOne = "Food Review"
-      }else if(itemsSelected === "Drinks"){
-         itemOne = "Drink Review" //only drink
+      let itemOne = "";
+      if(itemsSelected === "Energy"){
+         itemOne = "Energy Crisis";
+      }else if (itemsSelected === "Drink"){
+         itemOne = "Drink Review";
+      }else if (itemsSelected === "Food"){
+         itemOne = "Running On Empty";
+      }else if (itemsSelected === "Surprise"){
+         const options = ["Running on Empty", "Energy Crisis", "Drink Review"];
+         itemOne = options[Math.floor(Math.random() * options.length)];
       }
       let results = `<table><th>Product</th><th>Manufacturer</th><th>Rating</th><th>Youtube Video Title</th>`;
       let count = 0;
       while (count < 4){
             let num = Math.floor(Math.random()* data2.length);
-            if(data2[num].videoTitle.includes(itemOne)){
+            if(data2[num].category.includes(itemOne)){
             count++;
             await collection.insertOne({ product: data2[num].product });
             results += 
@@ -94,16 +99,24 @@ app.get("/search", async (request, response) => {
 });
 
 
-app.post("/recent", async (request, response) => {
+app.get("/recent", async (request, response) => {
    //const database = client.db(databaseName);
    //const collection = database.collection(collectionName);
    const filter = {};
    const cursor = collection.find(filter);
    const result = await cursor.toArray();
    let answer = "";
-      result.forEach(item => answer += `${item}<br>`);
-      answer += `Recent Searches: ${result.length} reviews`; 
-      response.send(answer);
+   result.forEach(item => answer += `<p>${item.product}</p><br>`);
+   answer += `<h2>Recent Searches: ${result.length} reviews</h2>`; 
+   response.render("recent", { search: answer });
+});
+
+app.get("/clear", async (request, response) => {
+   await client.connect();
+   const database = client.db(databaseName);
+   const collection = database.collection(collectionName);
+   await collection.deleteMany({});
+   response.render("clear");
 });
 
 console.log(`Web server started and running at http://localhost:6543`);
