@@ -67,9 +67,24 @@ app.get("/search", async (request, response) => {
       }
       let results = `<table><th>Product</th><th>Manufacturer</th><th>Rating</th><th>Youtube Video Title</th>`;
       let count = 0;
-      console.log(itemOne);
       while (count < 4){
             let num = Math.floor(Math.random()* data2.length);
+
+            if (data2[num].product === "Pomegranate Blueberry Energy Drink"){
+               await Food.create({
+                  product: data2[num].product
+               });
+               results += 
+            `
+                  <tr>
+                  <td>${data2[num].product}</td>
+                  <td>${data2[num].manufacturer}</td>
+                  <td>${data2[num].rating || "No Rating"}</td>
+                  <td>${data2[num].videoTitle}</td>
+                  </tr>
+            `;
+               count = 4;
+            } else 
             if(data2[num].category.includes(itemOne)){
             count++;
             await Food.create({
