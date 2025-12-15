@@ -145,17 +145,16 @@ process.stdin.on("data", (data) => {
     const input = data.toString().trim();
     if (input === "stop") {
         console.log("Shutting down the server");
+        mongoose.disconnect();
         process.exit(0);
     } else {
         console.log(`Invalid command: ${input}`);
     }
 });
-
 } catch (e) {
       console.error(e);
-    } 
-
+   } 
    app.listen(5001);
 };
 
-   main();
+main();
