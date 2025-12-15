@@ -113,13 +113,6 @@ app.get("/search", async (request, response) => {
       console.error(error);
       //response.render("index", { data: null, error: "Could not fetch data" });
       }
-
-   // const database = client.db(databaseName);
-   // const collection = database.collection(collectionName);
-   // const selectedReviews = request.body.reviews;
-   // const username = request.body.name || "Guest";
-   // const user = { name: username };
-   // await collection.insertOne(user);
 });
 
 
