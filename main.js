@@ -6,6 +6,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
+const about = require("./routes/about");
+app.use("/about", about);
+
+
 require("dotenv").config({
    path: path.resolve(__dirname, "credentials/.env"),
 });
@@ -14,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 async function main() {
    const uri = process.env.MONGO_CONNECTION_STRING;
