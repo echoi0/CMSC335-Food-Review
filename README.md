@@ -6,7 +6,7 @@
 
 **App Description:** Helps users find new foods or drinks and allows them to view ratings/reviews for those items.
 
-**YouTube Video Link:** https://youtu.be/VvdLpb8RmUU
+**YouTube Video Link:** [https://youtu.be/VvdLpb8RmUU](https://youtu.be/VvdLpb8RmUU)
 
 **APIs:** TheReportOfTheWeek-API [https://github.com/andyklimczak/TheReportOfTheWeek-API](https://github.com/andyklimczak/TheReportOfTheWeek-API)
 
