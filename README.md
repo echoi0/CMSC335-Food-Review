@@ -2,7 +2,7 @@
 
 **Submitted By:** 
 
-**Group Members:** Elijah (), Yohana Michael (yohana23), Luis (umdluis), Sarah Zachariah (szachar2)
+**Group Members:** Elijah Choi (echoi04), Yohana Michael (yohana23), Luis (umdluis), Sarah Zachariah (szachar2)
 
 **App Description:** 
 
@@ -14,4 +14,5 @@
 
 
 **Deployed App Link:** https://food-review-pfi6.onrender.com/
+
 
