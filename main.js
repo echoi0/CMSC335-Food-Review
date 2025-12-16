@@ -11,7 +11,7 @@ app.use("/about", about);
 
 
 require("dotenv").config({
-   path: path.resolve(__dirname, "credentials/.env"),
+   path: path.resolve(__dirname, "credentials/y.env"),
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
