@@ -1,6 +1,6 @@
 ﻿# CMSC335-Food-Review
 
-**Submitted By:** 
+**Submitted By:** Sarah Zachariah (szachar2)
 
 **Group Members:** Elijah Choi (echoi04), Yohana Michael (yohana23), Luis Menjivar (umdluis), Sarah Zachariah (szachar2)
 
@@ -10,7 +10,7 @@
 
 **APIs:** TheReportOfTheWeek-API [https://github.com/andyklimczak/TheReportOfTheWeek-API](https://github.com/andyklimczak/TheReportOfTheWeek-API)
 
-**Contact Email:** 
+**Contact Email:** szachar2@terpmail.umd.edu
 
 
 **Deployed App Link:** [https://food-review-pfi6.onrender.com/](https://food-review-pfi6.onrender.com/)
